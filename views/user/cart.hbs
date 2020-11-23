@@ -1,0 +1,86 @@
+<section>
+  <div class="container">
+    
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">item</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Qty</th>
+          
+            
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+       {{#each products}}
+        <tr>
+          <td><img style="width:40px;height:50px" src="/product-images/{{this.product._id}}.jpg"></td>
+          <td>{{this.product.name}}</td>
+          <td><b>{{this.product.price}}/-</b></td>
+        
+          <td><button class="cart-item-count mr-3 btn btn-danger" onclick="changeProQty('{{this._id}}','{{this.product._id}}','{{../user}}',-1)">-</button>
+          <span id="{{this.product._id}}">{{this.quantity}}</span>
+          <button class="cart-item-count mr-3 btn btn-danger" onclick="changeProQty('{{this._id}}','{{this.product._id}}','{{../user}}',1)">+</button></td>
+
+          <td> <button class="cart-item-count mr-3 btn btn-succuss" onclick="deletePro('{{this._id}}','{{this.product._id}}','{{../user}}')">remove</button>         </td>
+</td>
+        </tr>
+        {{/each}}
+      
+      </tbody>
+    </table>
+  <hr>
+  <div class="float-right pr-5">Total:Rs.<span id="total">{{totalValue}}</span> <br>
+  <a href="/place-order" class="float-right  mt-3 btn btn-success">Place Order</a>
+  </div>
+  </div>
+</section>
+<script>
+  function changeProQty(cartId,prodId,userId,count){
+    let quantity=parseInt(document.getElementById(prodId).innerHTML)
+    count=parseInt(count)
+    $.ajax({
+    url:'/change-product-qty',
+    data:{
+      user:userId,
+      cart:cartId,
+      product:prodId,
+      count:count,
+      quantity:quantity
+    },
+    method:'post',
+    success:(response)=>{
+      if(response.removeProduct){
+         alert("product removed")
+         location.reload()
+    }else{
+      document.getElementById(prodId).innerHTML=quantity+count;
+      document.getElementById('total').innerHTML=response.total;
+
+    }      
+     
+    }
+  })
+
+} 
+function deletePro(cartId,prodId,userId){
+    
+    $.ajax({
+    url:'/delete-Pro',
+    data:{
+      user:userId,
+      cart:cartId,
+      product:prodId,
+    },
+    method:'post',
+    success:(response)=>{
+      if(response.removeitem){
+         alert("product removed")
+         location.reload()
+    }
+    }
+    })
+}
+</script>

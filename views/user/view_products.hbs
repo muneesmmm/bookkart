@@ -1,0 +1,34 @@
+<style>
+body {
+  padding: 20px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("/product-images/bch.jpg");
+  height: 100%;
+}
+</style>
+<body>
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            {{#each products}}
+            <div class="col-md-3 p-3">
+                <div class="row">
+                    <div class="card" style="width: 15rem; height:auto">
+                        <img class="card-img-top" src="/product-images/{{this._id}}.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.name}}</h5>
+                             <p class="card-text"><b>{{this.price}}/-</b></p>
+                          
+                            <p class="card-text">{{this.describtion}}</p>
+                            <button onclick="addToCart('{{this._id}}')"class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+</section>
+
+<script>
+    
+</script>

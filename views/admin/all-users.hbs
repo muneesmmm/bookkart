@@ -1,0 +1,31 @@
+
+
+<section>
+  <div class="container">
+    <div class="row mt-4">
+    </div>
+    <table class="table mt-5" id="products">
+      <thead>
+        <tr>
+          <th scope="col">name</th>
+          <th scope="col">email</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td>{{this.email}}</td>
+
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
+<script>
+  $(function () {
+    $('#products').DataTable();
+  });
+    </script>

@@ -1,0 +1,28 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+    </div>
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th></th>
+          
+          
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{this.Author}}</td>
+          <td><a href="/view-authors/{{this.Author}}" class="btn btn-primary">Viwe Books</a>
+          
+
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
