@@ -26,7 +26,7 @@ module.exports = {
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
             let loginStatus = false
-            let respons = {}
+            let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
             if (user) {
                 bcrypt.compare(userData.password, user.password).then((status) => {
@@ -294,7 +294,7 @@ module.exports = {
     generateRazorpay: (orderId,total) => {
         return new Promise((resolve, reject) => {
             var options = {
-                amount: total,  // amount in the smallest currency unit  
+                amount: total*100,  // amount in the smallest currency unit  
                 currency: "INR",
                 receipt: "" + orderId
             };
@@ -308,5 +308,6 @@ module.exports = {
             });
         })
     }
+    
 
 }

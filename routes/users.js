@@ -43,18 +43,17 @@ router.post('/signup',(req,res)=>{
   })
 router.post('/login',(req,res)=>{
 userHelper.doLogin(req.body).then((response)=>{
-  if(response.user['type']==='admin'){
-    req.session.user=response.user
-    req.session.userloggedIn=true
-    res.redirect('/admin')
-  }
+  // if(response.user['type']==='admin'){
+  //   req.session.user=response.user
+  //   req.session.userloggedIn=true
+  //   res.redirect('/admin')
+  // }
   if(response.status){
     req.session.user=response.user
     req.session.userloggedIn=true
-
     res.redirect('/')
   }else{
-    req.session.userloginErr="invalid username & password"
+    req.session.userloginErr=true
     res.redirect('/login')
   }
 })
