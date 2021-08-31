@@ -65,10 +65,17 @@ router.get('/logout',(req,res)=>{
 })
 router.get('/cart',verifylogin,async(req,res)=>{
   let products=await userHelper.getCartProducts(req.session.user._id)
-  let totalValue=await userHelper.getTotalAmount(req.session.user._id)
+  let cartCount=await userHelper.getCartCount(req.session.user._id)
+  console.log(cartCount)
+  if(cartCount == 0){
+    res.render('user/empty',{user:req.session.user})
+  
+  }else{
+    let totalValue=await userHelper.getTotalAmount(req.session.user._id,products)
   console.log(products)
   console.log(req.session.user._id)
   res.render('user/cart',{products,user:req.session.user._id,totalValue})
+  }
 })
 router.get('/add-to-cart/:id',(req,res)=>{
   console.log("api call") 
@@ -77,16 +84,23 @@ router.get('/add-to-cart/:id',(req,res)=>{
   })
 })
 router.post('/change-product-qty',(req,res,next)=>{
-  console.log(req.body)
+  console.log('......................',req.body.quantity)
   userHelper.changeQty(req.body).then(async(response)=>{
+    if(response){
     response.total=await userHelper.getTotalAmount(req.body.user)
      res.json(response)
+    }else{
+      res.redirect('/empty')
+    }
   })
+
+
 })
 router.post('/delete-Pro',(req,res,next)=>{
   console.log(req.body)
   userHelper.deleteProd(req.body).then((response)=>{
      res.json(response)
+     
   })
 
 })
